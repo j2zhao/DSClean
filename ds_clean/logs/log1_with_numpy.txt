@@ -1,0 +1,21 @@
+1615545121.066224;relation;((15, 10), 1);((11, 10), 3)
+1615545121.067345;relation;((15, 10), 1);((4, 10), 4)
+1615545121.068727;relation;((15,), 2);((11,), 5)
+1615545121.069679;relation;((15,), 2);((4,), 6)
+1615545121.1041448;new;((4,), 11)
+1615545120.937184;new;((15, 10), 1)
+{'time': '1615545120.937498', 'filename': 'test_logged_array.py,31', 'context': ['X_train, X_test, y_train, y_test = train_test_split(test, test_y)\n'], 'function_name': '__getitem__', 'input_ids': ((15, 10), 1), 'output_ids': [], 'args': "{'key': array([ 4,  7,  3, 14,  8, 10,  2,  9,  1, 12,  5])}"}
+{'time': '1615545121.06629', 'filename': 'test_logged_array.py,31', 'context': ['X_train, X_test, y_train, y_test = train_test_split(test, test_y)\n'], 'function_name': '__getitem__', 'input_ids': ((15, 10), 1), 'output_ids': [], 'args': "{'key': array([11,  6,  0, 13])}"}
+{'time': '1615545121.07022', 'filename': 'test_logged_array.py,31', 'context': ['X_train, X_test, y_train, y_test = train_test_split(test, test_y)\n'], 'function_name': 'train_test_split', 'input_ids': [((15, 10), 1), ((15,), 2)], 'output_ids': [((11, 10), 7), ((4, 10), 8), ((11,), 9), ((4,), 10)], 'args': '{}'}
+1615545120.937251;new;((15,), 2)
+{'time': '1615545121.0674062', 'filename': 'test_logged_array.py,31', 'context': ['X_train, X_test, y_train, y_test = train_test_split(test, test_y)\n'], 'function_name': '__getitem__', 'input_ids': ((15,), 2), 'output_ids': [], 'args': "{'key': array([ 4,  7,  3, 14,  8, 10,  2,  9,  1, 12,  5])}"}
+{'time': '1615545121.0687768', 'filename': 'test_logged_array.py,31', 'context': ['X_train, X_test, y_train, y_test = train_test_split(test, test_y)\n'], 'function_name': '__getitem__', 'input_ids': ((15,), 2), 'output_ids': [], 'args': "{'key': array([11,  6,  0, 13])}"}
+1615545121.069759;new;((11, 10), 7)
+{'time': '1615545121.103352', 'filename': 'test_logged_array.py,37', 'context': ['kmeans.fit(X_train, y_train)\n'], 'function_name': 'fit', 'input_ids': [((11, 10), 7), ((11,), 9)], 'output_ids': [], 'args': '{}'}
+{'time': '1615545121.1050692', 'filename': 'test_logged_array.py,42', 'context': ['svm.fit(X_train, y_train)\n'], 'function_name': 'fit', 'input_ids': [((11, 10), 7), ((11,), 9)], 'output_ids': [], 'args': '{}'}
+1615545121.069959;new;((4, 10), 8)
+{'time': '1615545121.1041632', 'filename': 'test_logged_array.py,38', 'context': ['y_predict = kmeans.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((4, 10), 8)], 'output_ids': [((4,), 11)], 'args': '{}'}
+{'time': '1615545121.105574', 'filename': 'test_logged_array.py,43', 'context': ['y_predict = svm.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((4, 10), 8)], 'output_ids': [((4,), 12)], 'args': '{}'}
+1615545121.070092;new;((11,), 9)
+1615545121.070208;new;((4,), 10)
+1615545121.105559;new;((4,), 12)

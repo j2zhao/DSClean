@@ -1,0 +1,7 @@
+1615573453.119563;new;((10, 10), 1)
+1615573496.928155;new;((10, 10), 1)
+1615573512.178111;new;((10, 10), 1)
+{'time': '1615573512.178299', 'filename': 'test_time.py,8', 'context': ['test = test + test_1\n'], 'function_name': 'add,__call__', 'input_ids': [((10, 10), 1), ((10, 10), 2)], 'output_ids': [((10, 10), 3)], 'args': 'None'}
+1615573512.178287;new;((10, 10), 3)
+{'time': '1615573512.285661', 'filename': 'test_time.py,9', 'context': ['np.sum(test)\n'], 'function_name': 'add,reduce', 'input_ids': [((10, 10), 3)], 'output_ids': [52.45667574778559], 'args': 'None'}
+1615573512.178205;new;((10, 10), 2)

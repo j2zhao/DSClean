@@ -26,28 +26,28 @@ def parse_logs(file_name, graph_name):
             log['time'] = log_[0]
             log['function_name'] = log_[1]
             log['input_ids'] = log_[2]
+            logs.append(log)
     # sort by time
-    # logs.sort(reverse = True, key= lambda x : x['time'])
-
+    logs.sort(key= lambda x : float(x['time']))
     graph = nx.DiGraph()
     for log in logs:
         if log['function_name'] == 'new':
             arr = ast.literal_eval(log['input_ids'])
-            if str(arr[1]) not in graph:
-                graph.add_node(str(arr[1]), shape= arr[0], function_name = 'new')
+            if str(arr) not in graph:
+                graph.add_node(str(arr), shape= arr[0], function_name = 'new')
         else:
             # if log['function_name'] == '__getitem__':
             #     continue
             name = log['filename'].split(',')[-1] + ',' + log['function_name']
-            if type(log['input_ids'], list):
+            if isinstance(log['input_ids'], list):
                 inputs = [str(x) for x in log['input_ids']]
             else:
                 inputs = [str(log['input_ids'])]
-            if type(log['output_ids'], list):
+            if isinstance(log['output_ids'], list):
                 outputs = [str(x) for x in log['output_ids']]
             else:
                 outputs = [str(log['output_ids'])]
-            outputs = log['output_id']
+            outputs = log['output_ids']
             graph.add_node(name, function_name = log['function_name'], nline = log['filename'].split(',')[-1], args = log['args'], inputs = inputs, outputs = outputs)
             input_ids = log['input_ids']
             if not isinstance(input_ids,list):

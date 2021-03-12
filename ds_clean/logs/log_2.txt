@@ -1,0 +1,38 @@
+1615534100.417363;new;((100, 10), 2)
+{'time': '1615534100.5803678', 'filename': 'test_logged_array.py,24', 'context': ['test = (test + 1) * 2\n'], 'function_name': 'multiply,__call__', 'input_ids': [((100, 10), 2), 2], 'output_ids': [((100, 10), 3)], 'args': 'None'}
+1615534100.417234;new;((100, 10), 1)
+{'time': '1615534100.417382', 'filename': 'test_logged_array.py,24', 'context': ['test = (test + 1) * 2\n'], 'function_name': 'add,__call__', 'input_ids': [((100, 10), 1), 1], 'output_ids': [((100, 10), 2)], 'args': 'None'}
+1615534100.580346;new;((100, 10), 3)
+1615534100.582367;new;((11, 10), 6)
+1615534100.582526;new;((4, 10), 7)
+1615534100.582666;new;((11,), 8)
+1615534100.5827992;new;((4,), 9)
+1615534100.619333;new;((4,), 15)
+{'time': '1615534100.6197278', 'filename': 'test_logged_array.py,40', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 15), 'output_ids': [], 'args': "{'key': (-4,)}"}
+{'time': '1615534100.6204648', 'filename': 'test_logged_array.py,40', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 15), 'output_ids': [], 'args': "{'key': (-3,)}"}
+{'time': '1615534100.621996', 'filename': 'test_logged_array.py,40', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 15), 'output_ids': [], 'args': "{'key': (-2,)}"}
+{'time': '1615534100.622734', 'filename': 'test_logged_array.py,40', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 15), 'output_ids': [], 'args': "{'key': (-1,)}"}
+1615534100.614381;new;((4,), 13)
+{'time': '1615534100.614805', 'filename': 'test_logged_array.py,39', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 13), 'output_ids': [], 'args': "{'key': (-4,)}"}
+{'time': '1615534100.616997', 'filename': 'test_logged_array.py,39', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 13), 'output_ids': [], 'args': "{'key': (-3,)}"}
+{'time': '1615534100.617738', 'filename': 'test_logged_array.py,39', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 13), 'output_ids': [], 'args': "{'key': (-2,)}"}
+{'time': '1615534100.61846', 'filename': 'test_logged_array.py,39', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 13), 'output_ids': [], 'args': "{'key': (-1,)}"}
+{'time': '1615534100.619352', 'filename': 'test_logged_array.py,40', 'context': ['print(y_predict == y_test)\n'], 'function_name': 'equal,__call__', 'input_ids': [((4,), 13), ((4,), 14)], 'output_ids': [((4,), 15)], 'args': 'None'}
+1615534100.6318212;new;((4,), 17)
+{'time': '1615534100.632258', 'filename': 'test_logged_array.py,45', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 17), 'output_ids': [], 'args': "{'key': (-4,)}"}
+{'time': '1615534100.6331189', 'filename': 'test_logged_array.py,45', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 17), 'output_ids': [], 'args': "{'key': (-3,)}"}
+{'time': '1615534100.633944', 'filename': 'test_logged_array.py,45', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 17), 'output_ids': [], 'args': "{'key': (-2,)}"}
+{'time': '1615534100.634824', 'filename': 'test_logged_array.py,45', 'context': ['print(y_predict == y_test)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 17), 'output_ids': [], 'args': "{'key': (-1,)}"}
+1615534100.581534;new;((15, 10), 4)
+{'time': '1615534100.5828118', 'filename': 'test_logged_array.py,31', 'context': ['X_train, X_test, y_train, y_test = train_test_split(test, test_y)\n'], 'function_name': 'train_test_split', 'input_ids': [((15, 10), 4), ((15,), 5)], 'output_ids': [((11, 10), 6), ((4, 10), 7), ((11,), 8), ((4,), 9)], 'args': 'None'}
+1615534100.581613;new;((15,), 5)
+{'time': '1615534100.6135428', 'filename': 'test_logged_array.py,37', 'context': ['kmeans.fit(X_train, y_train)\n'], 'function_name': 'fit', 'input_ids': [((11, 10), 10), ((11,), 11)], 'output_ids': [], 'args': 'None'}
+{'time': '1615534100.624307', 'filename': 'test_logged_array.py,42', 'context': ['svm.fit(X_train, y_train)\n'], 'function_name': 'fit', 'input_ids': [((11, 10), 10), ((11,), 11)], 'output_ids': [], 'args': 'None'}
+{'time': '1615534100.6143968', 'filename': 'test_logged_array.py,38', 'context': ['y_predict = kmeans.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((4, 10), 12)], 'output_ids': [((4,), 13)], 'args': 'None'}
+{'time': '1615534100.6249118', 'filename': 'test_logged_array.py,43', 'context': ['y_predict = svm.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((4, 10), 12)], 'output_ids': [((4,), 16)], 'args': 'None'}
+1615534100.624896;new;((4,), 16)
+{'time': '1615534100.6277251', 'filename': 'test_logged_array.py,44', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 16), 'output_ids': [], 'args': "{'key': (-4,)}"}
+{'time': '1615534100.628662', 'filename': 'test_logged_array.py,44', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 16), 'output_ids': [], 'args': "{'key': (-3,)}"}
+{'time': '1615534100.6295402', 'filename': 'test_logged_array.py,44', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 16), 'output_ids': [], 'args': "{'key': (-2,)}"}
+{'time': '1615534100.630698', 'filename': 'test_logged_array.py,44', 'context': ['print(y_predict)\n'], 'function_name': '__getitem__', 'input_ids': ((4,), 16), 'output_ids': [], 'args': "{'key': (-1,)}"}
+{'time': '1615534100.6318421', 'filename': 'test_logged_array.py,45', 'context': ['print(y_predict == y_test)\n'], 'function_name': 'equal,__call__', 'input_ids': [((4,), 16), ((4,), 14)], 'output_ids': [((4,), 17)], 'args': 'None'}

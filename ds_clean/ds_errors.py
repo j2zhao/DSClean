@@ -17,10 +17,9 @@ class DataErrors():
 
 class TimeErrors(DataErrors):
     def array(self, graph, node, prevs):
-
-        for prev in prevs:
-            i = ast.literal_eval(prev)
-            graph[prev]['lineage'] = np.arange(i[0][0])
+        n = graph.nodes[node]
+        i = ast.literal_eval(node)
+        graph.nodes[node]['lineage'] = np.arange(i[0][0])
 
     def check_backwards(self, node, inputs, outputs):
         raise NotImplemented()

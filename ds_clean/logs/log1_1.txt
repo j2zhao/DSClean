@@ -1,0 +1,13 @@
+1615544388.937541;new;((4,), 7)
+1615544388.745759;new;((15, 10), 1)
+{'time': '1615544388.746685', 'filename': 'test_logged_array.py,31', 'context': ['X_train, X_test, y_train, y_test = train_test_split(test, test_y)\n'], 'function_name': 'train_test_split', 'input_ids': [((15, 10), 1), ((15,), 2)], 'output_ids': [((11, 10), 3), ((4, 10), 4), ((11,), 5), ((4,), 6)], 'args': '{}'}
+1615544388.745826;new;((15,), 2)
+1615544388.746447;new;((11, 10), 3)
+{'time': '1615544388.9368992', 'filename': 'test_logged_array.py,37', 'context': ['kmeans.fit(X_train, y_train)\n'], 'function_name': 'fit', 'input_ids': [((11, 10), 3), ((11,), 5)], 'output_ids': [], 'args': '{}'}
+{'time': '1615544388.9383092', 'filename': 'test_logged_array.py,42', 'context': ['svm.fit(X_train, y_train)\n'], 'function_name': 'fit', 'input_ids': [((11, 10), 3), ((11,), 5)], 'output_ids': [], 'args': '{}'}
+1615544388.74653;new;((4, 10), 4)
+{'time': '1615544388.93756', 'filename': 'test_logged_array.py,38', 'context': ['y_predict = kmeans.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((4, 10), 4)], 'output_ids': [((4,), 7)], 'args': '{}'}
+{'time': '1615544388.938991', 'filename': 'test_logged_array.py,43', 'context': ['y_predict = svm.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((4, 10), 4)], 'output_ids': [((4,), 8)], 'args': '{}'}
+1615544388.746603;new;((11,), 5)
+1615544388.746675;new;((4,), 6)
+1615544388.9389749;new;((4,), 8)

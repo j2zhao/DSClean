@@ -1,0 +1,18 @@
+1615544899.760742;new;((1797,), 2)
+1615544900.0407581;new;((899,), 7)
+1615544900.2090209;new;((899,), 9)
+1615544900.2092311;new;((899,), 10)
+1615544899.760653;new;((1797, 64), 1)
+{'time': '1615544899.7616892', 'filename': 'plot_digits_classification.py,70', 'context': ['    data, LoggedNDArray(digits.target), test_size=0.5, shuffle=False)\n'], 'function_name': 'train_test_split', 'input_ids': [((1797, 64), 1), ((1797,), 2)], 'output_ids': [((898, 64), 3), ((899, 64), 4), ((898,), 5), ((899,), 6)], 'args': "{'test_size': 0.5, 'shuffle': False}"}
+1615544899.761451;new;((898, 64), 3)
+{'time': '1615544899.946074', 'filename': 'plot_digits_classification.py,73', 'context': ['clf.fit(X_train, y_train)\n'], 'function_name': 'fit', 'input_ids': [((898, 64), 3), ((898,), 5)], 'output_ids': [], 'args': '{}'}
+1615544899.761538;new;((899, 64), 4)
+{'time': '1615544900.040781', 'filename': 'plot_digits_classification.py,76', 'context': ['predicted = clf.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((899, 64), 4)], 'output_ids': [((899,), 7)], 'args': '{}'}
+{'time': '1615544900.043196', 'filename': 'plot_digits_classification.py,76', 'context': ['predicted = clf.predict(X_test)\n'], 'function_name': 'predict', 'input_ids': [((899, 64), 4)], 'output_ids': [((899,), 8)], 'args': '{}'}
+1615544899.761612;new;((898,), 5)
+1615544899.76168;new;((899,), 6)
+1615544900.043178;new;((899,), 8)
+{'time': '1615544900.1147819', 'filename': 'plot_digits_classification.py,82', 'context': ['for ax, image, prediction in zip(axes, X_test.view(np.ndarray), predicted):\n'], 'function_name': '__getitem__', 'input_ids': ((899,), 8), 'output_ids': [], 'args': "{'key': 0}"}
+{'time': '1615544900.116029', 'filename': 'plot_digits_classification.py,82', 'context': ['for ax, image, prediction in zip(axes, X_test.view(np.ndarray), predicted):\n'], 'function_name': '__getitem__', 'input_ids': ((899,), 8), 'output_ids': [], 'args': "{'key': 1}"}
+{'time': '1615544900.117119', 'filename': 'plot_digits_classification.py,82', 'context': ['for ax, image, prediction in zip(axes, X_test.view(np.ndarray), predicted):\n'], 'function_name': '__getitem__', 'input_ids': ((899,), 8), 'output_ids': [], 'args': "{'key': 2}"}
+{'time': '1615544900.1180532', 'filename': 'plot_digits_classification.py,82', 'context': ['for ax, image, prediction in zip(axes, X_test.view(np.ndarray), predicted):\n'], 'function_name': '__getitem__', 'input_ids': ((899,), 8), 'output_ids': [], 'args': "{'key': 3}"}

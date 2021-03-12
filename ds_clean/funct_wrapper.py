@@ -24,16 +24,25 @@ def logging_func(orig_func):
     @functools.wraps(orig_func)
     def decorator(*args, **kwargs):
         print("Method called: %s, id: %s" % (orig_func.__name__, id(orig_func)))
-        cf = currentframe()
-        while cf.f_back:
-            cf = cf.f_back
-            filename = getframeinfo(cf).filename
-            print(" File:", filename, "at Line", cf.f_lineno, "\n Caller:", cf.f_code.co_name)
+        arrays = []
+        id_args = []
+        id_outputs = []
         for arg in args:
-            if isinstance(arg, np.ndarray):
-                print(" Numpy array id passed as argument:", id(arg), "\n Raw array:\n", arg)
+            if isinstance(arg, LoggedNDArray):
+                arg.write_log = False
+                arrays.append(arg)
+                id_args.append(arg.get_id())
+
         result = orig_func(*args, **kwargs)
-        print("Return object id:", id(result), "type:", type(result), "raw:", result)
+        if isinstance(result, Iterable):
+            for output in result:
+                if isinstance(output, LoggedNDArray):
+                    id_outputs.append(output.get_id())
+
+        if len(arrays) != 0:
+            write_log(arrays[0].file, str(time.time()), orig_func.__name__, id_args, id_outputs, kwargs)
+        for arg in arrays:
+            arg.write_log = True
         return result
 
     return decorator

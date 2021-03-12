@@ -5,17 +5,19 @@ from ds_clean.logged_array import *
 import functools
 import inspect
 
-def basic_tracker(function:
+def basic_tracker(function):
     @functools.wraps(function)
     def funct(*args, **kwargs):
         save_ids = []
         for arg in args:
             if isinstance(arg, LoggedNDArray):
+                pass
                 
         outputs = function(*args, **kwargs)
         
         for output in outputs:
             if isinstance(output, LoggedNDArray):
+                pass
                 
         return outputs
     return funct

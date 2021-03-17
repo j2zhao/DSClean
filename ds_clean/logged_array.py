@@ -2,30 +2,33 @@ import numpy as np
 import typing
 import random
 import string
-import shutil
 import os
-import inspect
 import pickle
-from numpy.core.arrayprint import str_format
-from sklearn.model_selection import train_test_split
-from sklearn.cluster import KMeans
-from sklearn.svm import LinearSVC
-from numpy.lib.arraysetops import isin
+import inspect
 import time
 
-#time stamp + line numbers
 
-def write_log(file, timestamp, function_name, frame_index = -1, input_ids = '', output_ids = '', args = None): 
-    frame = inspect.stack()[frame_index][0]
-    info = inspect.getframeinfo(frame)
-    context = ','.join([str(info.function), str(info.lineno)])
-        
-    if isinstance(input_ids, list):
-        input_ids = ','.join(input_ids)
-    if isinstance(output_ids, list):
-        output_ids = ','.join(output_ids)
+# time stamp + line numbers
+
+def write_log(file, timestamp, function_name, input_ids=[], output_ids=[], frame=None, args=None):
+    # if function_name == '__getitem__':  # handle edge case
+    #     return
+
+    if not frame:
+        frame_info = inspect.stack()[-1]
+    else:
+        frame_info = inspect.getframeinfo(frame)
+
+    if frame_info:
+        fileline = ','.join([str(frame_info.filename), str(frame_info.lineno)])
+        code_context = frame_info.code_context
+    else:
+        fileline = ''
+        code_context = ''
+
     args = str(args)
-    log = {'time': timestamp, 'context': context, 'function_name': function_name, 'input_ids': input_ids, 'output_ids': output_ids, 'args': args}
+    log = {'time': timestamp, 'filename': fileline, 'context': code_context, 'function_name': function_name, 'input_ids': input_ids,
+           'output_ids': output_ids, 'args': args}
     log = str(log)
     log = log + '\n'
     file.write(log)
@@ -39,22 +42,27 @@ def write_child_log(file, time, parent_ids, child_ids):
     log = '{};relation;{};{}\n'.format(time, parent_ids, child_ids)
     file.write(log)
 
+
 def write_new_log(file, time, id):
     log = '{};new;{}\n'.format(time, id)
     file.write(log)
 
+
 def rand_string(N):
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(N))
 
+
 class LoggedNDArray(np.ndarray):
-    file_name = './logs/log.txt'
-    directory = './logs'
+    file_name = '/tmp/logs/log.txt'
+    directory = '/tmp/logs'
+    next_id = 1
+
     def __new__(cls, input_array):
         obj = np.asarray(input_array).view(cls)
         return obj
 
     def __array_finalize__(self, obj):
-        #if obj is None:
+        # if obj is None:
         self.file = open(self.file_name, 'a+')
         if isinstance(obj, LoggedNDArray):
             id_ = str(obj.get_id())
@@ -64,34 +72,38 @@ class LoggedNDArray(np.ndarray):
         else:
             self.write_log = True
             write_new_log(self.file, time.time(), str(self.get_id()))
-        
-    
+
     def __getitem__(self, key) -> typing.Any:
         if self.write_log:
-            write_log(self.file, str(time.time()), self.__getitem__.__name__, input_ids=str(self.get_id()), args = {'key': key})
+            write_log(self.file, str(time.time()), self.__getitem__.__name__, input_ids=self.get_id(),
+                      args={'key': key})
         return super().__getitem__(key)
-    
+
     def __setitem__(self, key, value) -> None:
         if self.write_log:
-            write_log(self.file, str(time.time()), self.__setitem__.__name__, input_ids=str(self.get_id()), args = {'key': key})
-        self.file.write(str(self.funct) + " ; " + self.__setitem__.__name__ + " ; "  + str(key) + '\n')
-        
+            write_log(self.file, str(time.time()), self.__setitem__.__name__, input_ids=self.get_id(),
+                      args={'key': key})
+        self.file.write(str(self.funct) + " ; " + self.__setitem__.__name__ + " ; " + str(key) + '\n')
+
         return super().__setitem__(key, value)
-    
-    def get_id(self, index = None):
+
+    def get_id(self, index=None):
+        if not hasattr(self, 'id'):
+            self.id = LoggedNDArray.next_id
+            LoggedNDArray.next_id += 1
         if index != None:
-            id_ = str(id(self)) + '_' + index
+            id_ = str(self.id) + '_' + index
         else:
-            id_ = id(self)
+            id_ = self.id
         id_ = (self.shape, id_)
         return id_
-    
+
     def set_write_log(self, value):
         self.write_log = value
 
     def take(self, indices, axis=None, out=None, mode='raise'):
         if self.write_log:
-            if out!= None:
+            if out != None:
                 out = out.view(np.ndarray)
             output = super().take(indices, axis, out, mode)
             output = output.view(LoggedNDArray)
@@ -100,16 +112,16 @@ class LoggedNDArray(np.ndarray):
             args['indices'] = str(indices)
             args['axis'] = str(axis)
             args['mode'] = str(mode)
-            
+
             if self.write_log:
                 write_child_log(self.file, time.time(), str(self.get_id()), str(output.get_id()))
-                write_log(self.file, str(time.time()), self.take.__name__, input_ids=str(self.get_id()), output_ids = str(output.get_id()), args = args)
+                write_log(self.file, str(time.time()), self.take.__name__, input_ids=self.get_id(),
+                          output_ids=output.get_id(), args=args)
             return output
         else:
             return super().take(indices, axis, out, mode)
 
-        #self.file.write(str(self.funct) + " ; " + self.take.__name__ + " ; "  + str(kwargs) + '\n')
-        
+        # self.file.write(str(self.funct) + " ; " + self.take.__name__ + " ; "  + str(kwargs) + '\n')
 
     # def __getattr__(self, name):
     #     if self.write_log:
@@ -117,22 +129,21 @@ class LoggedNDArray(np.ndarray):
     #     print(type(super()))
     #     return super().__getattr__(name)
 
-    
-    def __array_ufunc__(self, ufunc, method, *inputs, out=None, where = True, **kwargs):        
+    def __array_ufunc__(self, ufunc, method, *inputs, out=None, where=True, **kwargs):
         args = []
         input_ids = []
-        #input_ids.append(str(self.get_id()))
+        # input_ids.append(str(self.get_id()))
         logged_args = {}
         new_nd_arrays = []
-        
+
         for input_ in inputs:
             if isinstance(input_, LoggedNDArray):
                 args.append(input_.view(np.ndarray))
-                input_ids.append(str(input_.get_id()))
+                input_ids.append(input_.get_id())
             elif isinstance(input_, np.ndarray):
                 args.append(input_)
                 id_file = str(id(input_)) + '_' + rand_string(10)
-                id_ = str((input_.shape, id_file))
+                id_ = (input_.shape, id_file)
                 new_nd_arrays.append((self.file, time.time(), id_))
                 array_path = os.path.join(self.directory, id_file + '.npy')
                 with open(array_path, 'w') as file:
@@ -140,8 +151,8 @@ class LoggedNDArray(np.ndarray):
                 input_ids.append(id_)
             else:
                 args.append(input_)
-                input_ids.append(str(input_))
-        
+                input_ids.append(input_)
+
         # deal with ufunc methods
         if method == 'reduceat' or method == 'at':
             if isinstance(inputs[1], LoggedNDArray):
@@ -151,11 +162,11 @@ class LoggedNDArray(np.ndarray):
                 input_ids[1] = logged_args['indices']
                 with open(array_path, 'w') as file:
                     np.save(file, args[1])
-            
+
             elif isinstance(inputs[1], np.array):
                 logged_args['indices'] = input_ids[1]
             # if indices is a tuple
-            
+
             elif isinstance(inputs[1], tuple):
                 indices = []
                 args[1] = []
@@ -168,10 +179,10 @@ class LoggedNDArray(np.ndarray):
                         args[1].append(arr)
                         with open(array_path, 'w') as file:
                             np.save(file, arr)
-                   
+
                     elif isinstance(index, np.array):
                         id_file = str(id(index)) + '_' + rand_string(10)
-                        id_ = str((index.shape, id_file)) 
+                        id_ = str((index.shape, id_file))
                         indices.append(id_)
                         array_path = os.path.join(self.directory, id_file + '.npy')
                         args[1].append(index)
@@ -184,7 +195,7 @@ class LoggedNDArray(np.ndarray):
                         obj_path = os.path.join(self.directory, id_file + '.pickle')
                         with open(obj_path, 'w') as file:
                             np.save(file, index)
-                
+
                 args[1] = tuple(args[1])
                 logged_args['indices'] = str(indices)
             else:
@@ -204,7 +215,7 @@ class LoggedNDArray(np.ndarray):
                     outputs.append(out_.view(np.ndarray))
         else:
             outputs = out
-        
+
         if not isinstance(outputs, list):
             kwargs['out'] = outputs
         else:
@@ -219,7 +230,7 @@ class LoggedNDArray(np.ndarray):
             with open(array_path, 'w') as file:
                 np.save(file, w)
             logged_args['where'] = str(id_)
-        
+
         elif isinstance(where, np.ndarray):
             w = where
             id_ = str(id(where)) + '_' + rand_string(10)
@@ -227,7 +238,7 @@ class LoggedNDArray(np.ndarray):
             array_path = os.path.join(self.directory, str(id_) + '.npy')
             with open(array_path, 'w') as file:
                 np.save(file, w)
-        
+
         elif where is not True:
             w = where
             id_file = str(id(where)) + '_' + rand_string(10)
@@ -237,18 +248,18 @@ class LoggedNDArray(np.ndarray):
                 pickle.dump(where, file)
         else:
             w = True
-        
+
         if w is not True:
-            kwargs['where'] = w 
+            kwargs['where'] = w
 
         results = super().__array_ufunc__(ufunc, method,
-                                                 *args, **kwargs)
+                                          *args, **kwargs)
 
         if results is NotImplemented:
             return NotImplemented
 
         if ufunc.nout == 1:
-            results = (results,)        
+            results = (results,)
 
         results_ = []
         output_ids = []
@@ -256,20 +267,20 @@ class LoggedNDArray(np.ndarray):
             for result in results:
                 if isinstance(result, LoggedNDArray):
                     results_.append(result)
-                    output_ids.append(str(result.get_id()))
-                
+                    output_ids.append(result.get_id())
+
                 elif isinstance(result, np.ndarray):
                     result_ = result.view(LoggedNDArray)
                     results_.append(result_)
-                    output_ids.append(str(result_.get_id()))
+                    output_ids.append(result_.get_id())
                 elif result is None:
                     pass
                 else:
                     results_.append(result)
-                    output_ids.append(str(result))
+                    output_ids.append(result)
         else:
             if not isinstance(outputs, tuple):
-                outputs = (outputs, )
+                outputs = (outputs,)
             for result, output in zip(results, outputs):
                 if output == None:
                     if isinstance(result, np.ndarray):
@@ -278,7 +289,7 @@ class LoggedNDArray(np.ndarray):
                         results_.append(result)
                 else:
                     results_.append(output)
-                    output_ids.append(str(None))
+                    output_ids.append(None)
 
         results = tuple(results_)
         # write array without output, where, and methods
@@ -290,30 +301,8 @@ class LoggedNDArray(np.ndarray):
             del kwargs['where']
         args = kwargs.update(logged_args)
         if self.write_log:
-            write_log(self.file, str(time.time()), name, input_ids = input_ids, output_ids = output_ids, args = args)
-        
+            write_log(self.file, str(time.time()), name, input_ids=input_ids, output_ids=output_ids, args=args)
+
         if method == 'at':
             return
         return results[0] if len(results) == 1 else results
-
-shutil.rmtree('logs')
-os.makedirs('logs')
-test = LoggedNDArray(np.random.rand(100, 10))
-test_2 = LoggedNDArray(np.random.rand(100, 10))
-#print(test[0][0])
-# test_y = np.random.choice(2, 100)
-# test = LoggedNDArray(test)
-# test_y = LoggedNDArray(test_y)
-test = (test+ 1)*2
-#X_train, X_test, y_train, y_test = train_test_split(test, test_y)
-# print(X_train)
-# print(X_test)
-
-
-# kmeans = KMeans()
-# kmeans.fit(a)
-# kmeans.predict(b)
-# svm = LinearSVC()
-# svm.fit(X_train, y_train)
-# svm.predict(X_test, y_test)
-# np.mean(test) # this does wierd things?
